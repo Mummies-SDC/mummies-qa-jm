@@ -5,7 +5,7 @@ DROP TABLE IF EXISTS answers CASCADE;
 DROP TABLE IF EXISTS answers_photos CASCADE;
 
 CREATE TABLE questions (
-    "id" INT NOT NULL PRIMARY KEY,
+    "id" SERIAL NOT NULL PRIMARY KEY,
     "product_id" INT NOT NULL,
     "body" VARCHAR(1000) NOT NULL,
     "date_written" BIGINT NOT NULL,
@@ -21,7 +21,7 @@ DELIMITER ','
 CSV HEADER;
 
 CREATE TABLE answers (
-    "id" INT NOT NULL PRIMARY KEY,
+    "id" SERIAL NOT NULL PRIMARY KEY,
     "question_id" INT NOT NULL,
     "body" VARCHAR(1000) NOT NULL,
     "date_written" BIGINT NOT NULL,
@@ -37,12 +37,24 @@ FROM '/Users/jake-manning/SDC_Data/answers.csv'
 DELIMITER ','
 CSV HEADER;
 
+CREATE SEQUENCE answers_id_seq;
+ALTER TABLE answers
+ALTER id
+SET DEFAULT NEXTVAL('answers_id_seq');
+SELECT SETVAL('answers_id_seq', (SELECT MAX(id) FROM answers));
+
 CREATE TABLE answers_photos (
-    "id" INT NOT NULL PRIMARY KEY,
+    "id" SERIAL NOT NULL PRIMARY KEY,
     "answer_id" INT NOT NULL,
     "url" TEXT NOT NULL,
     FOREIGN KEY ("answer_id") REFERENCES answers("id")
 );
+
+CREATE SEQUENCE answers_photos_id_seq;
+ALTER TABLE answers_photos
+ALTER id
+SET DEFAULT NEXTVAL('answers_photos_id_seq');
+SELECT SETVAL('answers_photos_id_seq', (SELECT MAX(id) FROM answers_photos));
 
 COPY answers_photos
 FROM '/Users/jake-manning/SDC_Data/answers_photos.csv'

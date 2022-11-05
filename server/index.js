@@ -1,7 +1,6 @@
 const express = require('express');
-const path = require('path');
 const compression = require('compression');
-const router = require('./router');
+const router = require('./router.js');
 
 const app = express();
 require('dotenv').config();
@@ -16,11 +15,9 @@ const logger = (req, res, next) => {
   next();
 };
 app.use(logger);
-app.use('/fec', router);
+app.use(router);
 
 app.use(compression());
-
-app.use(express.static(path.join(__dirname, '../client/dist')));
 
 app.listen(process.env.PORT || 3000, (err) => {
   if (err) {

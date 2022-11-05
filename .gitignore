@@ -1,7 +1,3 @@
 node_modules
 .env
-coverage
-RFP-student.pem
-Cole-Student.pem
-client/dist/bundle.js
-client/dist/bundle.js.gz
+package-lock.json
