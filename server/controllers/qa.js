@@ -8,16 +8,15 @@ module.exports = {
   },
 
   getAnswers: (req, res) => {
-    console.log('question id: ', req.params.question_id);
     models.getAnswers(req.params.question_id)
       .then((answers) => res.json(answers))
       .catch((err) => console.log(err));
   },
 
   addQuestion: (req, res) => {
-    // models.addQuestion(req.body)
-    //   .then(() => console.log('question added CONTR'))
-    //   .catch((err) => console.log(err));
+    models.addQuestion(req.body)
+      .then(() => res.sendStatus(201))
+      .catch((err) => console.log(err));
   },
 
   addAnswer: (req, res) => {
