@@ -37,6 +37,7 @@ FROM '/Users/jake-manning/SDC_Data/answers.csv'
 DELIMITER ','
 CSV HEADER;
 
+DROP SEQUENCE IF EXISTS answers_id_seq CASCADE;
 CREATE SEQUENCE answers_id_seq;
 ALTER TABLE answers
 ALTER id
@@ -50,13 +51,23 @@ CREATE TABLE answers_photos (
     FOREIGN KEY ("answer_id") REFERENCES answers("id")
 );
 
+COPY answers_photos
+FROM '/Users/jake-manning/SDC_Data/answers_photos.csv'
+DELIMITER ','
+CSV HEADER;
+
+DROP SEQUENCE IF EXISTS answers_photos_id_seq CASCADE;
 CREATE SEQUENCE answers_photos_id_seq;
 ALTER TABLE answers_photos
 ALTER id
 SET DEFAULT NEXTVAL('answers_photos_id_seq');
 SELECT SETVAL('answers_photos_id_seq', (SELECT MAX(id) FROM answers_photos));
 
-COPY answers_photos
-FROM '/Users/jake-manning/SDC_Data/answers_photos.csv'
-DELIMITER ','
-CSV HEADER;
+CREATE INDEX product_id_index
+ON questions(product_id);
+
+CREATE INDEX question_id_index
+ON answers(question_id);
+
+CREATE INDEX answer_id_index
+ON answers_photos(answer_id);

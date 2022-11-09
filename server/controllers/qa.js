@@ -1,19 +1,23 @@
 const { models } = require('../models');
 
-console.log(models);
 module.exports = {
-  getQuestions: () => {
-
+  getQuestions: (req, res) => {
+    models.getQuestions(req.params.product_id)
+      .then((questions) => res.json({ product_id: req.params.product_id, results: questions }))
+      .catch((err) => console.log(err));
   },
 
-  getAnswers: () => {
-
+  getAnswers: (req, res) => {
+    console.log('question id: ', req.params.question_id);
+    models.getAnswers(req.params.question_id)
+      .then((answers) => res.json(answers))
+      .catch((err) => console.log(err));
   },
 
   addQuestion: (req, res) => {
-    models.addQuestion(req.body)
-      .then(() => console.log('question added CONTR'))
-      .catch((err) => console.log(err));
+    // models.addQuestion(req.body)
+    //   .then(() => console.log('question added CONTR'))
+    //   .catch((err) => console.log(err));
   },
 
   addAnswer: (req, res) => {

@@ -2,9 +2,9 @@ const router = require('express').Router();
 const controllers = require('./controllers');
 
 // // QA ROUTES
-// router.get('/qa/questions/', controllers.qa.getQuestions);
-// router.get('/qa/questions/:question_id/answers', controllers.qa.getAnswers);
-router.post('/qa/questions', controllers.qa.addQuestion);
+router.get('/qa/questions/:product_id', controllers.qa.getQuestions);
+router.get('/qa/questions/:question_id/answers', controllers.qa.getAnswers);
+router.post('/qa/questions/', controllers.qa.addQuestion);
 router.post('/qa/questions/:question_id/answers', controllers.qa.addAnswer);
 router.put('/qa/questions/:question_id/helpful', controllers.qa.helpfulQuestion);
 router.put('/qa/questions/:question_id/report', controllers.qa.reportQuestion);
